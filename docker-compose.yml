@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: nodalys
+      POSTGRES_PASSWORD: nodalys
+      POSTGRES_DB: nodalys
+    ports:
+      - "5432:5432"
+    volumes:
+      - nodalys_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nodalys -d nodalys"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mock_api:
+    build: ./mock_api
+    ports:
+      - "8001:8001"
+    environment:
+      MOCK_API_PORT: "8001"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health')"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  nodalys_db_data:
