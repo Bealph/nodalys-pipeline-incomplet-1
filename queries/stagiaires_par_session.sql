@@ -8,5 +8,5 @@ SELECT
 FROM sessions s
 JOIN clients cl ON cl.id = s.client_id
 LEFT JOIN stagiaires st ON st.session_id = s.id
-GROUP BY s.titre
+GROUP BY s.titre, cl.raison_sociale
 ORDER BY nb_stagiaires DESC;
