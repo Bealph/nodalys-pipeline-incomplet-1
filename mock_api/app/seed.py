@@ -31,12 +31,50 @@ CLIENTS = [
     ("FR66677788899", "Helios Tech"),
 ]
 
-PRENOMS = ["Amine", "Léa", "Marc", "Nadia", "Olivier", "Pauline", "Quentin",
-          "Rachid", "Sophie", "Théo", "Ugo", "Valérie", "Wassila", "Xavier",
-          "Yasmine", "Zoé", "Aïcha", "Bastien", "Clara", "Damien"]
-NOMS = ["Martin", "Dubois", "Bernard", "Petit", "Robert", "Richard", "Durand",
-        "Moreau", "Laurent", "Simon", "Michel", "Lefebvre", "Leroy", "Roux",
-        "David", "Bertrand", "Morel", "Fournier", "Girard", "Bonnet"]
+PRENOMS = [
+    "Amine",
+    "Léa",
+    "Marc",
+    "Nadia",
+    "Olivier",
+    "Pauline",
+    "Quentin",
+    "Rachid",
+    "Sophie",
+    "Théo",
+    "Ugo",
+    "Valérie",
+    "Wassila",
+    "Xavier",
+    "Yasmine",
+    "Zoé",
+    "Aïcha",
+    "Bastien",
+    "Clara",
+    "Damien",
+]
+NOMS = [
+    "Martin",
+    "Dubois",
+    "Bernard",
+    "Petit",
+    "Robert",
+    "Richard",
+    "Durand",
+    "Moreau",
+    "Laurent",
+    "Simon",
+    "Michel",
+    "Lefebvre",
+    "Leroy",
+    "Roux",
+    "David",
+    "Bertrand",
+    "Morel",
+    "Fournier",
+    "Girard",
+    "Bonnet",
+]
 
 
 def _build_clients():
@@ -58,17 +96,19 @@ def _build_sessions():
                 duree_jours = random.choice([10, 15, 20, 30, 40])
                 date_fin = date_debut + timedelta(days=duree_jours * 7 // 5)
                 client = random.choice(_build_clients())
-                sessions.append({
-                    "id": sid,
-                    "code": f"{code}-{year}T{q}",
-                    "titre": f"{titre} — {year} T{q}",
-                    "client_id": client["id"],
-                    "client_raison_sociale": client["raison_sociale"],
-                    "date_debut": date_debut.isoformat(),
-                    "date_fin": date_fin.isoformat(),
-                    "duree_heures": duree_jours * 7,
-                    "places_max": random.choice([8, 10, 12, 15]),
-                })
+                sessions.append(
+                    {
+                        "id": sid,
+                        "code": f"{code}-{year}T{q}",
+                        "titre": f"{titre} — {year} T{q}",
+                        "client_id": client["id"],
+                        "client_raison_sociale": client["raison_sociale"],
+                        "date_debut": date_debut.isoformat(),
+                        "date_fin": date_fin.isoformat(),
+                        "duree_heures": duree_jours * 7,
+                        "places_max": random.choice([8, 10, 12, 15]),
+                    }
+                )
                 sid += 1
     return sessions
 
@@ -81,15 +121,17 @@ def _build_stagiaires(sessions):
         for _ in range(nb):
             prenom = random.choice(PRENOMS)
             nom = random.choice(NOMS)
-            stagiaires.append({
-                "id": stid,
-                "session_id": s["id"],
-                "prenom": prenom,
-                "nom": nom,
-                "email": f"{prenom.lower()}.{nom.lower()}@example.org",
-                # Champ qu'on N'A PAS le droit de collecter (mémo RGPD)
-                "telephone_personnel": f"06{random.randint(10000000, 99999999)}",
-            })
+            stagiaires.append(
+                {
+                    "id": stid,
+                    "session_id": s["id"],
+                    "prenom": prenom,
+                    "nom": nom,
+                    "email": f"{prenom.lower()}.{nom.lower()}@example.org",
+                    # Champ qu'on N'A PAS le droit de collecter (mémo RGPD)
+                    "telephone_personnel": f"06{random.randint(10000000, 99999999)}",
+                }
+            )
             stid += 1
     return stagiaires
 

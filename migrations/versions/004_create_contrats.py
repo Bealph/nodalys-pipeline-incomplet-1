@@ -19,7 +19,9 @@ def upgrade() -> None:
         "contrats",
         sa.Column("id", sa.Integer, primary_key=True),
         sa.Column("client_id", sa.Integer, sa.ForeignKey("clients.id"), nullable=False),
-        sa.Column("session_id", sa.Integer, sa.ForeignKey("sessions.id"), nullable=False),
+        sa.Column(
+            "session_id", sa.Integer, sa.ForeignKey("sessions.id"), nullable=False
+        ),
         sa.Column("statut", sa.String(8), nullable=False),
         sa.Column("montant_ht", sa.Numeric(14, 2), nullable=False),
         sa.Column("date_signature", sa.Date, nullable=False),

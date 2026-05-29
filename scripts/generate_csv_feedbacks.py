@@ -18,8 +18,20 @@ OUT.mkdir(parents=True, exist_ok=True)
 # Le mock_api expose ~ N sessions ; on s'aligne sur des session_id
 # probables (1..120) et stagiaire_email plausibles.
 SESSION_IDS = list(range(1, 46))  # aligné sur ce que mock_api expose
-PRENOMS = ["amine", "lea", "marc", "nadia", "pauline", "rachid", "sophie",
-           "yasmine", "zoe", "olivier", "quentin", "theo"]
+PRENOMS = [
+    "amine",
+    "lea",
+    "marc",
+    "nadia",
+    "pauline",
+    "rachid",
+    "sophie",
+    "yasmine",
+    "zoe",
+    "olivier",
+    "quentin",
+    "theo",
+]
 NOMS = ["martin", "dubois", "bernard", "petit", "robert", "richard", "durand"]
 
 COMMENTAIRES_OK = [
@@ -59,13 +71,15 @@ for filename, start, end, count in FILES:
         # Quelques notes invalides
         if random.random() < 0.03:
             note = 99
-        rows.append({
-            "session_id": random.choice(SESSION_IDS),
-            "stagiaire_email": email,
-            "date_saisie": random_date(start, end).isoformat(),
-            "note_globale": note,
-            "commentaire": random.choice(COMMENTAIRES_OK),
-        })
+        rows.append(
+            {
+                "session_id": random.choice(SESSION_IDS),
+                "stagiaire_email": email,
+                "date_saisie": random_date(start, end).isoformat(),
+                "note_globale": note,
+                "commentaire": random.choice(COMMENTAIRES_OK),
+            }
+        )
     # Doublons (5%)
     duplicates = random.sample(rows, max(1, len(rows) // 20))
     rows.extend(duplicates)
@@ -74,8 +88,13 @@ for filename, start, end, count in FILES:
     with (OUT / filename).open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(
             f,
-            fieldnames=["session_id", "stagiaire_email", "date_saisie",
-                        "note_globale", "commentaire"],
+            fieldnames=[
+                "session_id",
+                "stagiaire_email",
+                "date_saisie",
+                "note_globale",
+                "commentaire",
+            ],
             delimiter=";",
         )
         writer.writeheader()

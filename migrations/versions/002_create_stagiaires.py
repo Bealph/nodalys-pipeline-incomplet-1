@@ -18,7 +18,9 @@ def upgrade() -> None:
     op.create_table(
         "stagiaires",
         sa.Column("id", sa.Integer, primary_key=True),
-        sa.Column("session_id", sa.Integer, sa.ForeignKey("sessions.id"), nullable=False),
+        sa.Column(
+            "session_id", sa.Integer, sa.ForeignKey("sessions.id"), nullable=False
+        ),
         sa.Column("prenom", sa.String(128), nullable=False),
         sa.Column("nom", sa.String(128), nullable=False),
         sa.Column("email", sa.String(255), nullable=True),

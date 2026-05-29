@@ -18,14 +18,18 @@ SESSION_IDS = list(range(1, 46))  # aligné sur ce que mock_api expose
 contrats = []
 for i in range(1, NB_CONTRATS + 1):
     client_id = random.randint(1, 8)
-    contrats.append({
-        "id": i,
-        "client_id": client_id,
-        "session_id": random.choice(SESSION_IDS),
-        "statut": random.choice(["actif", "actif", "actif", "solde"]),
-        "montant_ht": round(random.uniform(2000, 25000), 2),
-        "date_signature": (date(2024, 1, 1) + timedelta(days=random.randint(0, 600))).isoformat(),
-    })
+    contrats.append(
+        {
+            "id": i,
+            "client_id": client_id,
+            "session_id": random.choice(SESSION_IDS),
+            "statut": random.choice(["actif", "actif", "actif", "solde"]),
+            "montant_ht": round(random.uniform(2000, 25000), 2),
+            "date_signature": (
+                date(2024, 1, 1) + timedelta(days=random.randint(0, 600))
+            ).isoformat(),
+        }
+    )
 
 out = Path(__file__).parent.parent / "data" / "contrats.json"
 out.parent.mkdir(parents=True, exist_ok=True)
