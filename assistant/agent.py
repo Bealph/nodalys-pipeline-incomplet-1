@@ -35,9 +35,7 @@ def _build_llm():
 
 def build_agent():
     llm = _build_llm()
-    tools = [query_db]
-    # TODO: re-bind query_feedbacks après le refactor du module tools
-    # tools.append(query_feedbacks)
+    tools = [query_db, query_feedbacks]
     return create_agent(llm, tools=tools, system_prompt=SYSTEM_PROMPT)
 
 

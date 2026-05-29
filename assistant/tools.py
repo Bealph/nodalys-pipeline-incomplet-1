@@ -44,7 +44,7 @@ def query_feedbacks(note_min: int = 1, note_max: int = 5) -> str:
     Utile pour répondre à des questions comme « quels sont les retours
     négatifs des dernières sessions ? ».
     """
-    engine = _engine_from_env("DB_FEEDBACK_URL")
+    engine = _engine_from_env("DB_URL")
     with engine.connect() as conn:
         result = conn.execute(
             text(
