@@ -24,6 +24,12 @@ def _engine_from_env(env_var: str = "DB_URL"):
 
 @tool
 def query_db(query_name: str) -> str:
+    """Exécute une requête SQL prédéfinie du dossier ``queries/``.
+
+    Le paramètre ``query_name`` est le nom du fichier sans extension
+    (ex. ``top_formations``, ``contrats_actifs``, ``stagiaires_par_session``,
+    ``feedbacks_recents``). Renvoie les lignes sous forme de string.
+    """
     sql_path = QUERIES_DIR / f"{query_name}.sql"
     if not sql_path.exists():
         return f"Requête inconnue : {query_name}. Disponibles : " + ", ".join(
