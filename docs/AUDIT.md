@@ -1,7 +1,5 @@
 # Note d'audit — Pipeline de collecte Nodalys
 
-**Auteur :** dev IA junior (reprise) · **Date :** 2026-05-28 · **Périmètre :** état des lieux *avant modifications*.
-
 ## 1. Organisation actuelle du pipeline
 
 Orchestration via `Makefile`, 5 étapes séquentielles :
@@ -35,6 +33,7 @@ Repéré par **lecture statique** (à confirmer par exécution).
 | 5 | `NOW() - '7 days'` sans mot-clé `INTERVAL` → syntaxe Postgres invalide. | `queries/feedbacks_recents.sql:10` | 🟠 Cassé |
 | 6 | `query_feedbacks` lit `DB_FEEDBACK_URL` (inexistante) au lieu de `DB_URL`. | `assistant/tools.py:47` | 🟠 Cassé |
 | 7 | `query_feedbacks` n'est plus exposé à l'agent (ligne commentée TODO). | `assistant/agent.py:38-40` | 🟡 Branchement |
+| 8 | **Ordre d'orchestration** : le `Makefile` lance `seed` (contrats) **avant** `ingest` (clients/sessions). Or les contrats ont des FK vers `clients` et `sessions` → `seed` plante en `ForeignKeyViolation` tant que `ingest` n'a pas peuplé les tables référencées. **Confirmé à l'exécution** (2026-05-29). | `Makefile:16-21` | 🟠 Orchestration |
 
 Hors scope (à signaler) : `upsert_stagiaires` ne gère pas la pagination cursor de l'API → seuls 25 stagiaires récupérés (`sessions.py:107-109`, marqué `TODO`).
 
